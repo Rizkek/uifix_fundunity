@@ -1,76 +1,116 @@
-# 🌿 FundUnity - Social Impact & Crowdfunding Platform
+# 🌿 FundUnity: Elevasi Dampak Sosial (Laravel x React Edition)
 
-Selamat datang di repositori **FundUnity**. Proyek ini adalah platform manajemen konten (CMS) dan Landing Page yang dirancang khusus untuk organisasi sosial, yayasan, atau gerakan komunitas yang mengutamakan transparansi dan engagement publik.
-
----
-
-### 🎨 Filosofi Desain (UI/UX driven)
-Proyek ini dibuat oleh seorang **UI/UX Designer** yang memilih untuk langsung menuangkan ide visual ke dalam baris kode (**Design-to-Code**) tanpa melalui proses prototyping di Figma secara mendalam. 
-
-- **Asetetik Emerald**: Menggunakan palet warna hijau emerald (`emerald-500` ke atas) untuk memberikan kesan tenang, terpercaya, dan profesional.
-- **Sistem Tipografi Bersih**: Meminimalkan penggunaan *font-bold* berlebihan untuk menjaga keterbacaan yang modern (clean look).
-- **Interaksi Mikro**: Animasi transisi menggunakan Tailwind CSS dan Framer Motion (simulated) untuk pengalaman pengguna yang lebih hidup.
+**FundUnity** adalah platform manajemen dampak sosial terintegrasi yang kini sedang dalam tahap **re-engineering** ke ekosistem **Laravel 11**. Proyek ini menggabungkan presisi **UI/UX Modern (React)** dengan kekuatan **Enterprise Backend (Laravel)** untuk menciptakan solusi crowdfunding dan transparansi sosial yang kokoh.
 
 ---
 
-### 🚀 Fitur Utama (Core Modules)
+## 🌟 Visi & Filosofi Lead UI/UX
 
-#### 1. Panel Admin (Manajemen Dashboard)
-Dashboard lengkap untuk administrator organisasi:
-- **Statistik & Ringkasan**: Visualisasi tren donasi dan aktivitas terbaru.
-- **Manajemen Campaign**: Pembuatan program galang dana, setting status (Aktif/Selesai), dan target dana.
-- **Keuangan & Transparansi**: Pencatatan dana masuk dan laporan pengeluaran yang terhubung langsung ke tampilan publik.
-- **Relasi (Stakeholders)**: Basis data donatur dan pendaftar **Relawan** yang masuk dari landing page.
-- **Manajemen Halaman Utama**: Kendali penuh atas Banner Slider, Pilar Program (Focus Areas), Mitra Kami, dan FAQ secara terpisah.
-- **Pengaturan & SEO**: Konfigurasi nama organisasi, logo, perbankan/QRIS, serta metadata SEO website.
+Sebagai sebuah proyek yang dipimpin oleh **UI/UX Designer**, kami tidak hanya membangun fitur, tapi membangun **kepercayaan**. Dengan migrasi ke Laravel, kami memperkuat *backbone* sistem agar visual yang indah memiliki performa dan keamanan tingkat tinggi.
 
-#### 2. Landing Page (Portal Publik)
-Halaman depan yang persuasif dan transparan:
-- **Hero Dynamic**: Banner informatif dengan CTA yang jelas.
-- **Pilar Pergerakan**: Visualisasi area fokus organisasi.
-- **Hot Campaigns**: Daftar program mendesak yang membutuhkan bantuan.
-- **Form Interaktif**: Pendaftaran relawan dan kotak pesan yang langsung terintegrasi ke inbox admin.
-- **Download Laporan**: Fitur unduh laporan transparansi dengan UX progress bar.
+> "Visual yang memukau tanpa sistem yang kokoh adalah janji kosong. FundUnity hadir untuk memberikan keduanya."
 
 ---
 
-### 🛠️ Tech Stack & Arsitektur
-- **Frontend**: Vite + React + TypeScript.
-- **Styling**: Tailwind CSS (Custom Utilities).
-- **Icons**: Phosphor Icons (`react-icons/pi`) & Lucide React.
-- **Routing**: React Router DOM (Private Route protection).
+## 🏗️ Arsitektur & Alur Sistem (System Flow)
 
-**Struktur Folder:**
-- `src/components/Landing`: Komponen penyusun halaman publik.
-- `src/components/` (Root components): Modul-modul utama Dashboard Admin.
-- `src/layout/`: Komponen struktural seperti Sidebar dan Header Admin.
-- `src/contexts/`: State management sederhana (Auth Context).
+### 1. Diagram Alir: Pengalaman Pengguna (Landing Page)
+Alur ini menjelaskan bagaimana *stakeholder* eksternal berinteraksi dengan portal publik untuk memberikan dampak.
+
+```mermaid
+sequenceDiagram
+    participant Guest as Pengunjung (Donatur/Relawan)
+    participant LP as Landing Page (React/Blade)
+    participant API as Backend (Laravel Controller)
+    participant DB as Database (Postgres/MySQL)
+    participant Mail as Notification Service (Mail/WA)
+
+    Guest->>LP: Eksplorasi Program & Pilar
+    Guest->>LP: Isi Form Donasi / Relawan
+    LP->>API: POST Validated Request
+    rect rgb(240, 255, 240)
+        API->>DB: Simpan Data (Transactions/Volunteers)
+        API->>Mail: Kirim Konfirmasi / Invoice
+    end
+    API-->>LP: Response Success (200 OK)
+    LP-->>Guest: Tampilkan Feedback Visual / Redirect Thank You
+```
+
+### 2. Diagram Alir: Manajemen Internal (Admin Dashboard)
+Alur ini menunjukkan bagaimana administrator mengelola operasional organisasi secara profesional.
+
+```mermaid
+graph LR
+    A[Admin Login] --> B{Akses Dashboard}
+    B --> C[Manajemen Konten LP]
+    B --> D[Manajemen Program/Campaign]
+    B --> E[Verifikasi Keuangan]
+    
+    C --> C1[Slider, Mitra, FAQ]
+    D --> D1[Luncurkan Program Baru]
+    E --> E1[Validasi Donasi Masuk]
+    E1 --> E2[Generate Laporan Otomatis]
+    
+    E2 -.-> F[Publikasikan di Landing Page]
+    style F fill:#10b981,color:#fff,stroke-dasharray: 5 5
+```
 
 ---
 
-### 💻 Panduan Untuk Developer
+## 🎨 Sistem Desain (The Visual Infrastructure)
 
-#### 🔹 Frontend (FE Developers)
-- Perhatikan penggunaan `noHeader` prop pada modul-modul di `src/components`. Prop ini digunakan agar modul bisa ditampilkan secara mandiri maupun disematkan dalam tabbed-manager tanpa double header.
-- Gunakan standar `rounded-2xl` atau `rounded-3xl` untuk elemen kontainer utama agar konsisten dengan bahasa desain UI/UX.
+Meskipun sistem dirembak ke Laravel, **Design Tokens** tetap menjadi panduan utama bagi tim Frontend dan Backend.
 
-#### 🔹 Backend (BE Developers)
-Integrasi API yang dibutuhkan mencakup:
-- **GET/POST /campaigns**: Manajemen data galang dana.
-- **POST /messages**: Menyimpan pesan dari kontak landing page.
-- **POST /volunteers**: Mengirim data relawan langsung ke database relawan di admin.
-- **GET/PATCH /settings**: Konfigurasi global identitas organisasi dan mode pemeliharaan.
-- **GET /finance**: Agregasi data transaksi untuk grafik dashboard.
+### Palet Dasar & Tipografi
+- **Primary Emerald (`#10b981`)**: Digunakan untuk elemen KPI, Button Utama, dan Status Sukses.
+- **Urgent Orange (`#f97316`)**: Digunakan untuk indikator target kampanye yang belum tercapai.
+- **Inter Font Family**: Digunakan secara global untuk memastikan keterbacaan data numerik pada laporan keuangan.
 
----
-
-### 🏃 Menjalankan Proyek
-1. Clone repositori ini.
-2. Jalankan `npm install` untuk mengunduh dependensi.
-3. Gunakan `npm run dev` untuk menjalankan di server lokal.
-4. (Opsional) Jalankan `npm run build` untuk melihat hasil optimasi produksi.
+### Aturan Frontend (Vite/React)
+- **Rounded Corners**: Konsistensi `rounded-2xl` untuk card dashboard.
+- **State Management**: Sinkronisasi antara Laravel API dengan React Hooks untuk pengalaman tanpa jeda.
 
 ---
 
-> [!TIP]
-> **Catatan UI/UX**: Jika ingin menambahkan elemen baru, pastikan menggunakan warna aksen `emerald` dan grid sistem `max-w-[1600px]` untuk menjaga konsistensi visual dashboard yang luas namun tetap rapi.
+## ⚙️ Backend Spec & Database (Laravel Powered)
+
+Bagian ini penting bagi tim Backend untuk memahami struktur logika yang diinginkan oleh Desainer/Lead.
+
+### Modul Backend Utama:
+1. **Landing Management**: Controller yang menangani data dinamis untuk Banner, Testimony, dan FAQ.
+2. **Campaign Engine**: Logika perhitungan progres dana (`dana_terkumpul` / `target_dana` * 100).
+3. **Volunteer Pipeline**: Sistem antrean dan verifikasi relawan baru.
+4. **Transparency Module**: Agregasi data transaksi untuk ditampilkan dalam bentuk grafik interaktif.
+
+### Schema Inti (Pratinjau):
+- `campaigns`: (id, title, slug, description, target_amount, current_amount, status, due_date).
+- `volunteers`: (id, name, email, skills, motivation, status_verifikasi).
+- `transactions`: (id, campaign_id, donor_name, amount, payment_method, proof_image, is_verified).
+- `settings`: (id, org_name, logo, contact_info, seo_meta).
+
+---
+
+## 📂 Struktur Folder Proyek (Hybrid Environment)
+
+- `fundunity/`: **Legacy/Main Laravel Backend** (Aset, Logic, DB).
+- `uifix/`: **Optimized Frontend (React/Vite)** yang berfungsi sebagai antarmuka user-centric berkualitas tinggi.
+- `src/components/Landing`: Komponen UI premium untuk gerbang depan.
+- `src/components/` (Root): Modul Admin Dashboard yang modular.
+
+---
+
+## 🚀 Panduan Pengembangan Bersama
+
+### Untuk Tim Backend:
+- Pastikan API Endpoint ramah terhadap kebutuhan data visual (JSON terstruktur).
+- Gunakan Laravel Sanctum untuk autentikasi yang aman antara FE dan BE.
+- Implementasikan **Caching** pada data landing page yang jarang berubah untuk performa maksimal.
+
+### Untuk Tim Frontend:
+- Tetap gunakan `noHeader` prop untuk fleksibilitas komponen.
+- Pastikan animasi Framer Motion tidak membebani performa browser (tetap ringan).
+
+---
+
+### 👨‍💻 Developed with 💚 by the Design-to-Code Initiative
+*Misi kami adalah menciptakan harmoni antara UX yang "memanjakan mata" dan Backend yang "tahan banting".*
