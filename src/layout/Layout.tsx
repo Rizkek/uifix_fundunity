@@ -15,17 +15,21 @@ const Layout = ({ children, onToggleSidebar }: LayoutProps) => {
     onToggleSidebar(); // Notify parent to update sidebar visibility status
   };
 
+  const sidebarWidth = isSidebarOpen ? "224px" : "72px";
+
   return (
-    <div className="flex">
+    <div className="min-h-screen bg-gray-50">
       {/* Sidebar dengan status isSidebarOpen */}
       <Sidebar isSidebarOpen={isSidebarOpen} onToggleSidebar={handleSidebarToggle} isLoggedIn={true} />
 
-      {/* Main Content */}
+      {/* Main Content — mengisi sisa layar setelah sidebar */}
       <div
-        className="flex-1 p-8 transition-all duration-300 ease-in-out"
+        className="p-8"
         style={{
-          marginLeft: isSidebarOpen ? "250px" : "80px", // Layout akan menyesuaikan dengan lebar sidebar
-          transition: "margin-left 0.3s ease-in-out", // Smooth transition untuk margin
+          marginLeft: sidebarWidth,
+          width: `calc(100% - ${sidebarWidth})`,
+          transition: "margin-left 0.3s ease-in-out, width 0.3s ease-in-out",
+          minHeight: "100vh",
         }}
       >
         {children}

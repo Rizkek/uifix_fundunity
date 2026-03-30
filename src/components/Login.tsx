@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import logoCMS from "../assets/images/logoCMS.jpg";
-import login1 from "../assets/images/login1.jpg";
+import { PiLock, PiEnvelope, PiShieldCheck } from "react-icons/pi";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -39,82 +38,107 @@ const Login = () => {
       await login(email.trim(), password);
     } catch (err) {
       console.error("Login failed:", err);
-      setError("Login failed. Please check your credentials or try again later.");
+      setError("Autentikasi gagal. Silakan periksa kredensial Anda.");
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-indigo-100 px-4">
-      <div className="flex flex-col md:flex-row w-full max-w-4xl bg-white rounded-2xl shadow-xl overflow-hidden">
-        {/* Left Image */}
-        <div className="hidden md:flex md:w-1/2 bg-indigo-50 justify-center items-center p-10">
-          <img src={login1} alt="Login Illustration" className="w-4/5 object-contain" />
+    <div className="flex items-center justify-center min-h-screen bg-slate-50 font-sans px-4">
+      <div className="w-full max-w-md">
+        
+        {/* Logo/Icon Header */}
+        <div className="flex flex-col items-center mb-10">
+           <div className="w-16 h-16 bg-indigo-600 rounded-2xl shadow-xl shadow-indigo-200 flex items-center justify-center mb-4">
+              <PiShieldCheck size={32} className="text-white" />
+           </div>
+           <h1 className="text-2xl font-black text-slate-900 tracking-tight">FundUnity Admin</h1>
+           <p className="text-slate-500 text-sm mt-1 font-medium">Panel Manajemen Organisasi Internal</p>
         </div>
 
-        {/* Right Form */}
-        <div className="w-full md:w-1/2 p-10 md:p-12 bg-white flex flex-col">
-          <div className="flex justify-center mb-6">
-            <img src={logoCMS} alt="CMS Logo" className="w-24 h-auto" />
+        {/* Login Card */}
+        <div className="bg-white border border-slate-200 rounded-3xl shadow-sm p-8 md:p-10">
+          
+          <div className="mb-8">
+            <h2 className="text-lg font-bold text-slate-800">Masuk ke Akun</h2>
+            <p className="text-xs text-slate-400 font-bold uppercase tracking-widest mt-1">Gunakan akses resmi Anda</p>
           </div>
 
-          <h2 className="text-center text-2xl font-extrabold text-gray-800 mb-8 select-none">
-            Welcome Back, Please Login
-          </h2>
-
           {error && (
-            <div className="mb-5 bg-red-100 text-red-700 px-4 py-3 rounded-lg text-center font-medium">
+            <div className="mb-6 bg-rose-50 border border-rose-100 text-rose-600 px-4 py-3 rounded-xl text-xs font-bold animate-shake">
               {error}
             </div>
           )}
 
-          <form onSubmit={handleLogin} className="flex flex-col space-y-6">
-            <label className="flex flex-col">
-              <span className="text-sm font-semibold text-gray-700 mb-2 select-none">Email Address</span>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                required
-                autoComplete="username"
-                className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
-                aria-label="Email Address"
-              />
-            </label>
+          <form onSubmit={handleLogin} className="space-y-5">
+            <div>
+              <label className="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Email Address</label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <PiEnvelope size={16} className="text-slate-300" />
+                </div>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="admin@fundunity.org"
+                  required
+                  className="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all outline-none"
+                />
+              </div>
+            </div>
 
-            <label className="flex flex-col">
-              <span className="text-sm font-semibold text-gray-700 mb-2 select-none">Password</span>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Your password"
-                required
-                autoComplete="current-password"
-                className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
-                aria-label="Password"
-              />
-            </label>
+            <div>
+              <label className="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Password</label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <PiLock size={16} className="text-slate-300" />
+                </div>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  required
+                  className="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all outline-none"
+                />
+              </div>
+            </div>
 
-            <div className="flex justify-between items-center text-sm">
-              <a href="#" className="text-indigo-600 hover:text-indigo-800 transition">
-                Forgot Password?
-              </a>
+            <div className="flex justify-end pt-1">
+              <button type="button" className="text-xs font-bold text-indigo-600 hover:text-indigo-700 transition-colors">
+                Lupa Kata Sandi?
+              </button>
             </div>
 
             <button
               type="submit"
               disabled={authLoading}
-              className={`w-full py-3 rounded-lg text-white font-semibold transition-colors ${
+              className={`w-full py-4 rounded-2xl text-white font-bold text-sm tracking-wide shadow-lg shadow-indigo-100 transition-all transform active:scale-[0.98] ${
                 authLoading ? "bg-indigo-300 cursor-not-allowed" : "bg-indigo-600 hover:bg-indigo-700"
               }`}
-              aria-busy={authLoading}
             >
-              {authLoading ? "Logging in..." : "Login"}
+              {authLoading ? "MENGOTENTIKASI..." : "MASUK KE DASHBOARD"}
             </button>
           </form>
         </div>
+
+        {/* Footer info */}
+        <p className="text-center text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] mt-12">
+           &copy; 2024 FundUnity Foundation • Secure Access Only
+        </p>
+
       </div>
+
+      <style>{`
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          25% { transform: translateX(-4px); }
+          75% { transform: translateX(4px); }
+        }
+        .animate-shake {
+          animation: shake 0.2s ease-in-out 0s 2;
+        }
+      `}</style>
     </div>
   );
 };

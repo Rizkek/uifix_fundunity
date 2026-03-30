@@ -1,18 +1,9 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import {
-  Home,
-  Info,
-  List,
-  CreditCard,
-  Settings,
-  LogOut,
-  Menu,
-  X,
-  Users,
-  Image,
-} from "lucide-react";
+import { PiHouse, PiUsersFour, PiHandshake, PiCaretLeft, PiCaretRight, PiTarget, PiDoorOpen, PiWallet, PiSlideshow, PiGear, PiCrosshair, PiChatsCircle, PiEnvelopeOpen, PiUsersThree, PiMegaphone, PiCalendarBlank, PiHeartbeat, PiUsers, PiChartLine, PiNotebook, PiBell } from "react-icons/pi";
 import { useAuth } from "../contexts/AuthContext";
+import logoImg from "../assets/images/Logo.png";
+import { TbSettings, TbWallet, TbSlideshow } from "react-icons/tb";
 
 interface SidebarProps {
   isSidebarOpen: boolean;
@@ -20,211 +11,171 @@ interface SidebarProps {
   isLoggedIn: boolean;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({
-  isSidebarOpen,
-  onToggleSidebar,
-  isLoggedIn,
-}) => {
-  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+const menuItems = [
+  { id: "home",        icon: PiHouse,       label: "Dashboard",       path: "/home" },
+  { id: "campaign",    icon: PiMegaphone,    label: "Campaign",       path: "/campaign" },
+  { id: "keuangantransparansi",    icon: PiChartLine,    label: "Keuangan",       path: "/keuangantransparansi" },
+  { id: "databasestakeholder", icon: PiUsers,        label: "Relasi",         path: "/databasestakeholder" },
+  { id: "messages",    icon: PiEnvelopeOpen,label: "Kotak Masuk",     path: "/messages" },
+  // Split Landing Management back as requested
+  { id: "aboutus",     icon: PiUsersFour,   label: "Profil Lembaga",      path: "/aboutus" },
+  { id: "focusareas",  icon: PiCrosshair,    label: "Fokus Area",     path: "/focusareas" },
+  { id: "imageslider", icon: TbSlideshow,   label: "Banner Slider",   path: "/imageslider" },
+  { id: "partners",    icon: PiHandshake,   label: "Mitra Kami",      path: "/partners" },
+  { id: "faqs",        icon: PiChatsCircle, label: "Tanya Jawab",     path: "/faqs" },
+  { id: "settings",    icon: TbSettings,    label: "Akun & Sistem",   path: "/settings" },
+];
+
+const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen, onToggleSidebar, isLoggedIn }) => {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
   const navigate = useNavigate();
   const { logout } = useAuth();
 
   if (!isLoggedIn) return null;
 
-  const menuItems = [
-    {
-      id: "home",
-      icon: Home,
-      label: "Home",
-      path: "/home",
-      color: "from-blue-500 to-blue-600",
-    },
-    {
-      id: "aboutus",
-      icon: Info,
-      label: "About Us",
-      path: "/aboutus",
-      color: "from-emerald-500 to-emerald-600",
-    },
-    {
-      id: "imageslider",
-      icon: Image,
-      label: "Image Slider",
-      path: "/imageslider",
-      color: "from-cyan-500 to-cyan-600",
-    },
-    {
-      id: "programs",
-      icon: List,
-      label: "Programs",
-      path: "/programs",
-      color: "from-purple-500 to-purple-600",
-    },
-    {
-      id: "partners",
-      icon: Users,
-      label: "Partners",
-      path: "/partners",
-      color: "from-yellow-500 to-yellow-600",
-    },
-    {
-      id: "transactions",
-      icon: CreditCard,
-      label: "Transactions",
-      path: "/transaksi",
-      color: "from-orange-500 to-orange-600",
-    },
-    {
-      id: "settings",
-      icon: Settings,
-      label: "Settings",
-      path: "/settings",
-      color: "from-pink-500 to-pink-600",
-    },
-  ];
-
-  const handleLogoutClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setShowLogoutModal(true);
-  };
-
   const handleConfirmLogout = async () => {
     try {
-      await logout(); // Pastikan ini async jika panggil API
+      await logout();
       navigate("/login");
     } catch (error) {
       console.error("Logout failed:", error);
     }
   };
 
-  const handleCancelLogout = () => {
-    setShowLogoutModal(false);
-  };
-
   return (
     <>
       <div
-        className={`fixed top-0 left-0 bottom-0 transition-all duration-500 ease-in-out backdrop-blur-sm border-r border-slate-700/50 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white shadow-2xl ${
-          isSidebarOpen ? "w-64" : "w-20"
-        }`}
+        className={`fixed top-0 left-0 bottom-0 flex flex-col transition-all duration-300 ease-in-out
+          bg-emerald-600 text-white rounded-r-3xl
+          ${isSidebarOpen ? "w-56" : "w-[72px]"}
+        `}
+        style={{ zIndex: 40 }}
       >
-        {/* Logo & Toggle */}
-        <div className="relative p-6 border-b border-slate-700/50">
-          <div className="flex items-center justify-between">
-            {isSidebarOpen && (
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <span className="text-white font-bold text-lg">F</span>
-                </div>
-                <div>
-                  <h1 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                    FundUnity
-                  </h1>
-                  <p className="text-xs text-slate-400">CMS Dashboard</p>
-                </div>
-              </div>
-            )}
-            <button
-              onClick={onToggleSidebar}
-              className="p-2 rounded-lg bg-slate-700/50 hover:bg-slate-600/50 border border-slate-600/50 hover:border-slate-500/50 transition"
-            >
-              {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
-          </div>
+        {/* Logo Area */}
+        <div className={`flex items-center shrink-0 mt-6 mb-8 ${isSidebarOpen ? "px-5 gap-3" : "justify-center"}`}>
+          <img
+            src={logoImg}
+            alt="FundUnity"
+            className={`object-contain transition-all duration-300 ${isSidebarOpen ? "h-9 w-auto" : "h-9 w-9 rounded-xl"}`}
+          />
+          {isSidebarOpen && (
+            <span className="text-sm font-bold text-white tracking-tight opacity-90 whitespace-nowrap">
+              FundUnity
+            </span>
+          )}
         </div>
 
-        {/* Menu Items */}
-        <div className="flex-1 p-4 space-y-2">
-          {menuItems.map(({ id, icon: IconComponent, label, path, color }) => (
+        {/* Nav Items */}
+        <nav className="flex-1 space-y-1 px-3 overflow-y-auto overflow-x-hidden">
+          {menuItems.map(({ id, icon: Icon, label, path }) => (
             <NavLink
               key={id}
               to={path}
+              onMouseEnter={() => setHoveredId(id)}
+              onMouseLeave={() => setHoveredId(null)}
               className={({ isActive }) =>
-                `group relative flex items-center py-3 px-4 rounded-xl transition-all duration-300 cursor-pointer overflow-hidden ${
-                  isActive
-                    ? `bg-gradient-to-r ${color} shadow-lg shadow-blue-500/25 text-white scale-105`
-                    : "hover:bg-slate-700/50 text-slate-300 hover:text-white hover:scale-105"
+                `relative group flex items-center gap-3 py-2.5 transition-all duration-150 cursor-pointer
+                ${isActive
+                  ? `bg-slate-50 text-emerald-600 rounded-l-full rounded-r-none -mr-3 ${isSidebarOpen ? "pl-4 pr-7" : "justify-center pl-0 pr-3"}`
+                  : `text-slate-300 hover:bg-emerald-700 hover:text-white rounded-2xl ${isSidebarOpen ? "px-4" : "justify-center px-0"}`
                 }`
               }
-              onMouseEnter={() => setHoveredLink(id)}
-              onMouseLeave={() => setHoveredLink(null)}
             >
-              <div
-                className={`relative z-10 flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-300 ${
-                  hoveredLink === id ? "bg-white/10" : ""
-                }`}
-              >
-                <IconComponent size={18} className="text-inherit" />
-              </div>
-              {isSidebarOpen && (
-                <span className="relative z-10 ml-4 font-medium">{label}</span>
-              )}
-              {!isSidebarOpen && hoveredLink === id && (
-                <div className="absolute left-16 bg-slate-800 text-white px-3 py-2 rounded-lg shadow-xl border border-slate-600 z-50 whitespace-nowrap">
-                  {label}
-                  <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1 w-2 h-2 bg-slate-800 rotate-45 border-l border-b border-slate-600"></div>
-                </div>
+              {({ isActive }) => (
+                <>
+                  {isActive && (
+                    <>
+                      {/* Top Inverted Curve */}
+                      <div 
+                        className="absolute right-0 -top-5 w-5 h-5 bg-transparent pointer-events-none"
+                        style={{ background: 'radial-gradient(circle at top left, transparent 20px, #f8fafc 0)' }}
+                      />
+                      {/* Bottom Inverted Curve */}
+                      <div 
+                        className="absolute right-0 -bottom-5 w-5 h-5 bg-transparent pointer-events-none"
+                        style={{ background: 'radial-gradient(circle at bottom left, transparent 20px, #f8fafc 0)' }}
+                      />
+                    </>
+                  )}
+                  <Icon
+                    size={19}
+                    strokeWidth={isActive ? 2.5 : 2}
+                    className="shrink-0"
+                  />
+                  {isSidebarOpen && (
+                    <span className={`text-[13px] font-semibold tracking-wide whitespace-nowrap ${isActive ? "text-emerald-600" : ""}`}>
+                      {label}
+                    </span>
+                  )}
+
+                  {!isSidebarOpen && hoveredId === id && (
+                    <div className="absolute left-full ml-3 px-3 py-1.5 bg-slate-700 text-white text-xs font-semibold rounded-lg shadow-lg z-50 whitespace-nowrap pointer-events-none">
+                      {label}
+                    </div>
+                  )}
+                </>
               )}
             </NavLink>
           ))}
-        </div>
+        </nav>
 
         {/* Logout */}
-        <div className="p-4 border-t border-slate-700/50">
+        <div className="px-3 pb-6 pt-3 mt-auto ">
           <button
-            onClick={handleLogoutClick}
-            className="group relative flex items-center py-3 px-4 w-full rounded-xl bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white transition-all duration-300 shadow-lg hover:shadow-red-500/25 hover:scale-105"
-            onMouseEnter={() => setHoveredLink("logout")}
-            onMouseLeave={() => setHoveredLink(null)}
+            onClick={() => setShowLogoutModal(true)}
+            onMouseEnter={() => setHoveredId("logout")}
+            onMouseLeave={() => setHoveredId(null)}
+            className={`relative group w-full flex items-center gap-3 py-2.5 rounded-xl text-slate-200 hover:bg-rose-600/10 hover:text-rose-400 transition-all
+              ${isSidebarOpen ? "px-4" : "justify-center px-0"}`}
           >
-            <div className="relative z-10 flex items-center justify-center w-8 h-8 rounded-lg bg-white/20 group-hover:bg-white/30 transition">
-              <LogOut size={18} className="text-white" />
-            </div>
-            {isSidebarOpen && <span className="ml-4 font-medium">Logout</span>}
-            {!isSidebarOpen && hoveredLink === "logout" && (
-              <div className="absolute left-16 bg-slate-800 text-white px-3 py-2 rounded-lg shadow-xl border border-slate-600 z-50 whitespace-nowrap">
-                Logout
-                <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1 w-2 h-2 bg-slate-800 rotate-45 border-l border-b border-slate-600"></div>
+            <PiDoorOpen size={19} className="shrink-0" />
+            {isSidebarOpen && (
+              <span className="text-[13px] font-semibold tracking-wide">Keluar</span>
+            )}
+            {!isSidebarOpen && hoveredId === "logout" && (
+              <div className="absolute left-full ml-3 px-3 py-1.5 bg-slate-700 text-white text-xs font-semibold rounded-lg shadow-lg z-50 whitespace-nowrap pointer-events-none">
+                Keluar
               </div>
             )}
           </button>
         </div>
+
+        {/* Toggle Button */}
+        <button
+          onClick={onToggleSidebar}
+          className="absolute -right-3 top-8 w-6 h-6 bg-white text-slate-600 hover:text-emerald-600 rounded-full flex items-center justify-center transition-all "
+        >
+          {isSidebarOpen ? <PiCaretLeft size={13} /> : <PiCaretRight size={13} />}
+        </button>
       </div>
 
-      {/* Logout Modal */}
+      {/* Logout Confirmation Modal */}
       {showLogoutModal && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-50">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 animate-scale-in">
-            <div className="p-6 border-b border-gray-100">
-              <div className="flex items-center space-x-4">
-                                <div className="w-12 h-12 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center">
-                  <LogOut size={20} className="text-white" />
-                </div>
-                <div>
-                  <h2 className="text-xl font-bold text-gray-900">Konfirmasi Logout</h2>
-                  <p className="text-sm text-gray-500">Anda yakin ingin keluar dari sistem?</p>
-                </div>
+        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-[2px] flex items-center justify-center p-4" style={{ zIndex: 60 }}>
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden border border-slate-100">
+            <div className="p-6 flex items-center gap-4">
+              <div className="w-12 h-12 bg-rose-50 text-rose-600 rounded-full flex items-center justify-center shrink-0">
+                <PiDoorOpen size={20} />
+              </div>
+              <div>
+                <h2 className="text-base font-bold text-slate-800">Akhiri Sesi?</h2>
+                <p className="text-sm text-slate-500 mt-0.5">Anda akan keluar dari panel admin.</p>
               </div>
             </div>
-            <div className="p-6">
-              <p className="text-gray-600 mb-6">
-                Semua sesi akan berakhir dan Anda perlu login kembali untuk mengakses dashboard.
-              </p>
-              <div className="flex space-x-3">
-                <button
-                  className="flex-1 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl transition-all duration-300 hover:scale-105"
-                  onClick={handleCancelLogout}
-                >
-                  Batal
-                </button>
-                <button
-                  className="flex-1 px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-red-500/25 transition-all duration-300 hover:scale-105"
-                  onClick={handleConfirmLogout}
-                >
-                  Ya, Logout
-                </button>
-              </div>
+            <div className="px-6 pb-6 flex justify-end gap-3">
+              <button
+                onClick={() => setShowLogoutModal(false)}
+                className="px-5 py-2 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-xl hover:bg-slate-50 transition-colors"
+              >
+                Batal
+              </button>
+              <button
+                onClick={handleConfirmLogout}
+                className="px-5 py-2 bg-rose-600 text-white text-sm font-semibold rounded-xl hover:bg-rose-700 transition-colors shadow-sm"
+              >
+                Ya, Keluar
+              </button>
             </div>
           </div>
         </div>
@@ -234,4 +185,3 @@ const Sidebar: React.FC<SidebarProps> = ({
 };
 
 export default Sidebar;
-

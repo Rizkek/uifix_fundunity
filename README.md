@@ -1,58 +1,76 @@
-<<<<<<< HEAD
-# React + TypeScript + Vite
+# 🌿 FundUnity - Social Impact & Crowdfunding Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Selamat datang di repositori **FundUnity**. Proyek ini adalah platform manajemen konten (CMS) dan Landing Page yang dirancang khusus untuk organisasi sosial, yayasan, atau gerakan komunitas yang mengutamakan transparansi dan engagement publik.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 🎨 Filosofi Desain (UI/UX driven)
+Proyek ini dibuat oleh seorang **UI/UX Designer** yang memilih untuk langsung menuangkan ide visual ke dalam baris kode (**Design-to-Code**) tanpa melalui proses prototyping di Figma secara mendalam. 
 
-## Expanding the ESLint configuration
+- **Asetetik Emerald**: Menggunakan palet warna hijau emerald (`emerald-500` ke atas) untuk memberikan kesan tenang, terpercaya, dan profesional.
+- **Sistem Tipografi Bersih**: Meminimalkan penggunaan *font-bold* berlebihan untuk menjaga keterbacaan yang modern (clean look).
+- **Interaksi Mikro**: Animasi transisi menggunakan Tailwind CSS dan Framer Motion (simulated) untuk pengalaman pengguna yang lebih hidup.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### 🚀 Fitur Utama (Core Modules)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+#### 1. Panel Admin (Manajemen Dashboard)
+Dashboard lengkap untuk administrator organisasi:
+- **Statistik & Ringkasan**: Visualisasi tren donasi dan aktivitas terbaru.
+- **Manajemen Campaign**: Pembuatan program galang dana, setting status (Aktif/Selesai), dan target dana.
+- **Keuangan & Transparansi**: Pencatatan dana masuk dan laporan pengeluaran yang terhubung langsung ke tampilan publik.
+- **Relasi (Stakeholders)**: Basis data donatur dan pendaftar **Relawan** yang masuk dari landing page.
+- **Manajemen Halaman Utama**: Kendali penuh atas Banner Slider, Pilar Program (Focus Areas), Mitra Kami, dan FAQ secara terpisah.
+- **Pengaturan & SEO**: Konfigurasi nama organisasi, logo, perbankan/QRIS, serta metadata SEO website.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+#### 2. Landing Page (Portal Publik)
+Halaman depan yang persuasif dan transparan:
+- **Hero Dynamic**: Banner informatif dengan CTA yang jelas.
+- **Pilar Pergerakan**: Visualisasi area fokus organisasi.
+- **Hot Campaigns**: Daftar program mendesak yang membutuhkan bantuan.
+- **Form Interaktif**: Pendaftaran relawan dan kotak pesan yang langsung terintegrasi ke inbox admin.
+- **Download Laporan**: Fitur unduh laporan transparansi dengan UX progress bar.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
-=======
-# FundUnity-CMS
->>>>>>> 36235cec67a918d71d6397654149516a979135aa
+---
+
+### 🛠️ Tech Stack & Arsitektur
+- **Frontend**: Vite + React + TypeScript.
+- **Styling**: Tailwind CSS (Custom Utilities).
+- **Icons**: Phosphor Icons (`react-icons/pi`) & Lucide React.
+- **Routing**: React Router DOM (Private Route protection).
+
+**Struktur Folder:**
+- `src/components/Landing`: Komponen penyusun halaman publik.
+- `src/components/` (Root components): Modul-modul utama Dashboard Admin.
+- `src/layout/`: Komponen struktural seperti Sidebar dan Header Admin.
+- `src/contexts/`: State management sederhana (Auth Context).
+
+---
+
+### 💻 Panduan Untuk Developer
+
+#### 🔹 Frontend (FE Developers)
+- Perhatikan penggunaan `noHeader` prop pada modul-modul di `src/components`. Prop ini digunakan agar modul bisa ditampilkan secara mandiri maupun disematkan dalam tabbed-manager tanpa double header.
+- Gunakan standar `rounded-2xl` atau `rounded-3xl` untuk elemen kontainer utama agar konsisten dengan bahasa desain UI/UX.
+
+#### 🔹 Backend (BE Developers)
+Integrasi API yang dibutuhkan mencakup:
+- **GET/POST /campaigns**: Manajemen data galang dana.
+- **POST /messages**: Menyimpan pesan dari kontak landing page.
+- **POST /volunteers**: Mengirim data relawan langsung ke database relawan di admin.
+- **GET/PATCH /settings**: Konfigurasi global identitas organisasi dan mode pemeliharaan.
+- **GET /finance**: Agregasi data transaksi untuk grafik dashboard.
+
+---
+
+### 🏃 Menjalankan Proyek
+1. Clone repositori ini.
+2. Jalankan `npm install` untuk mengunduh dependensi.
+3. Gunakan `npm run dev` untuk menjalankan di server lokal.
+4. (Opsional) Jalankan `npm run build` untuk melihat hasil optimasi produksi.
+
+---
+
+> [!TIP]
+> **Catatan UI/UX**: Jika ingin menambahkan elemen baru, pastikan menggunakan warna aksen `emerald` dan grid sistem `max-w-[1600px]` untuk menjaga konsistensi visual dashboard yang luas namun tetap rapi.

@@ -5,6 +5,7 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "jsx": "react-jsx",  // Untuk React 17 dan lebih baru
+    "allowJs": true,
     "strict": true,
     "skipLibCheck": true,
     "noEmit": true,
