@@ -35,11 +35,12 @@ const Settings = () => {
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const logoInputRef = useRef<HTMLInputElement>(null);
 
-  // --- State: Pembayaran ---
   const [bankName, setBankName] = useState("Bank BCA");
   const [accountNo, setAccountNo] = useState("8984 1234 5678");
   const [accountHolder, setAccountHolder] = useState("HMT-Unpad");
   const [qrisReady, setQrisReady] = useState(true);
+  const [qrisPreview, setQrisPreview] = useState<string | null>(null);
+  const qrisInputRef = useRef<HTMLInputElement>(null);
 
   // --- State: SEO & Pemeliharaan ---
   const [metaDesc, setMetaDesc] = useState("Platform donasi dan transparansi keuangan Himpunan Mahasiswa Teknik.");
@@ -61,6 +62,13 @@ const Settings = () => {
     if (e.target.files && e.target.files[0]) {
       const url = URL.createObjectURL(e.target.files[0]);
       setLogoPreview(url);
+    }
+  };
+
+  const handleQrisChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const url = URL.createObjectURL(e.target.files[0]);
+      setQrisPreview(url);
     }
   };
 
@@ -248,6 +256,7 @@ const Settings = () => {
 
                   <div className="space-y-1.5 pt-2 border-t border-slate-50">
                      <label className="block text-xs font-bold text-slate-500 mb-1.5">Tagline Utama</label>
+                     <p className="text-[10px] text-slate-400 mb-2">Tagline akan muncul di header landing page dan metadata SEO untuk memperkuat branding.</p>
                      <input type="text" value={tagline} onChange={(e) => setTagline(e.target.value)} className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-500/20" />
                   </div>
 
@@ -290,34 +299,55 @@ const Settings = () => {
               {activeTab === "pembayaran" && (
                 <div className="space-y-8 animate-fade-in">
                   <div>
-                    <h3 className="text-base font-bold text-slate-900 mb-1">Pengaturan Pembayaran</h3>
-                    <p className="text-xs text-slate-400">Konfigurasi rekening bank dan QRIS yang akan tampil di halaman donasi.</p>
+                    <h3 className="text-base font-bold text-slate-900 mb-1">Rekening Donasi Utama</h3>
+                    <p className="text-xs text-slate-400">Konfigurasi rekening bank dan upload QRIS global yayasan.</p>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-                    <div className="space-y-1.5">
-                      <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase">Nama Bank</label>
-                      <input type="text" value={bankName} onChange={(e) => setBankName(e.target.value)} className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-500/20" />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2">
+                    <div className="space-y-5">
+                       <div className="space-y-1.5">
+                          <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase">Nama Bank</label>
+                          <input type="text" value={bankName} onChange={(e) => setBankName(e.target.value)} className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-500/20" />
+                       </div>
+                       <div className="space-y-1.5">
+                          <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase">Nomor Rekening</label>
+                          <input type="text" value={accountNo} onChange={(e) => setAccountNo(e.target.value)} className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-emerald-500/20" />
+                       </div>
+                       <div className="space-y-1.5">
+                          <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase">Atas Nama</label>
+                          <input type="text" value={accountHolder} onChange={(e) => setAccountHolder(e.target.value)} className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-500/20" />
+                       </div>
                     </div>
-                    <div className="space-y-1.5">
-                      <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase">Nomor Rekening</label>
-                      <input type="text" value={accountNo} onChange={(e) => setAccountNo(e.target.value)} className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-emerald-500/20" />
-                    </div>
-                    <div className="space-y-1.5">
-                      <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase">Nama Pemilik Rekening</label>
-                      <input type="text" value={accountHolder} onChange={(e) => setAccountHolder(e.target.value)} className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-500/20" />
-                    </div>
-                    <div className="flex items-center gap-3 p-4 bg-emerald-50/50 border border-emerald-100 rounded-xl">
-                       <input type="checkbox" checked={qrisReady} onChange={(e) => setQrisReady(e.target.checked)} className="w-5 h-5 rounded-md text-emerald-600 focus:ring-emerald-500" />
-                       <div>
-                          <p className="text-xs font-bold text-emerald-800">Aktifkan Pembayaran QRIS</p>
-                          <p className="text-[10px] text-emerald-600">Munculkan opsi scan kode QR di landing page.</p>
+
+                    <div className="space-y-4">
+                       <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase">Master QRIS Foundation</label>
+                       <div className="relative group cursor-pointer" onClick={() => qrisInputRef.current?.click()}>
+                          <input type="file" accept="image/*" ref={qrisInputRef} className="hidden" onChange={handleQrisChange} />
+                          <div className="w-full aspect-square md:w-56 bg-slate-50 border-2 border-dashed border-slate-200 rounded-[32px] flex flex-col items-center justify-center p-6 transition-all group-hover:bg-emerald-50 group-hover:border-emerald-300 overflow-hidden shadow-inner">
+                             {qrisPreview ? (
+                                <img src={qrisPreview} alt="QRIS" className="w-full h-full object-contain" />
+                             ) : (
+                                <>
+                                   <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-emerald-600 shadow-sm border border-emerald-50 mb-3 group-hover:scale-110 transition-transform">
+                                      <PiImage size={24} />
+                                   </div>
+                                   <p className="text-[10px] font-bold text-slate-400 text-center uppercase tracking-wider">Tap untuk Upload QRIS</p>
+                                </>
+                             )}
+                          </div>
+                       </div>
+                       <div className="flex items-center gap-3 p-4 bg-emerald-50/50 border border-emerald-100 rounded-2xl">
+                          <input type="checkbox" checked={qrisReady} onChange={(e) => setQrisReady(e.target.checked)} className="w-5 h-5 rounded-lg text-emerald-600 focus:ring-emerald-500 border-emerald-300" />
+                          <div>
+                             <p className="text-[11px] font-bold text-emerald-800">Aktifkan Metode QRIS</p>
+                             <p className="text-[10px] text-emerald-600">Scan QRIS akan muncul di setiap modal donasi.</p>
+                          </div>
                        </div>
                     </div>
                   </div>
 
                   <div className="flex justify-end pt-4 border-t border-slate-50">
-                    <button onClick={() => triggerSaveToast("Konfigurasi pembayaran disimpan.")} className="px-6 py-2.5 bg-emerald-600 text-white rounded-xl text-sm font-bold hover:bg-emerald-700 flex items-center gap-1.5">
+                    <button onClick={() => triggerSaveToast("Konfigurasi pembayaran disimpan.")} className="px-6 py-2.5 bg-emerald-600 text-white rounded-xl text-sm font-bold hover:bg-emerald-700 flex items-center gap-1.5 transition-all shadow-md shadow-emerald-600/10">
                       <PiFloppyDisk size={16} /> Simpan Pembayaran
                     </button>
                   </div>

@@ -26,6 +26,7 @@ import LandingManager from './components/LandingManager';
 import Campaign from './components/Campaign';
 import KeuanganTransparansi from './components/KeuanganTransparansi';
 import DatabaseStakeholder from './components/DatabaseStakeholder';
+import GalleryManagement from './components/GalleryManagement';
 
 // Context
 import { AuthProvider } from './contexts/AuthContext';
@@ -78,6 +79,7 @@ const AppContent = () => {
           <Route path="/faqs" element={<PrivateRoute><Faqs /></PrivateRoute>} />
           <Route path="/messages" element={<PrivateRoute><Messages /></PrivateRoute>} />
           <Route path="/settings" element={<PrivateRoute><Settings /></PrivateRoute>} />
+          <Route path="/gallery" element={<PrivateRoute><GalleryManagement /></PrivateRoute>} />
 
           {/* Individual Landing Content Management */}
           <Route path="/imageslider" element={<PrivateRoute><ImageSlider /></PrivateRoute>} />

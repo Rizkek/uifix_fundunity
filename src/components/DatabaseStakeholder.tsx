@@ -46,12 +46,12 @@ const DatabaseStakeholder = () => {
            </div>
 
            {/* Hero Tabs */}
-           <div className="relative z-10 flex bg-white/10 p-1.5 rounded-2xl border border-white/20 backdrop-blur-md overflow-x-auto">
+            <div className="relative z-10 flex bg-white/10 p-1.5 rounded-2xl border border-white/20 backdrop-blur-md ">
               <button onClick={() => setActiveTab('donatur')} className={`flex shrink-0 items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold transition-all ${activeTab === 'donatur' ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20' : 'text-emerald-100 hover:text-white hover:bg-white/10'}`}>
                  <PiUsers size={18} /> Data Donatur
               </button>
               <button onClick={() => setActiveTab('penerima')} className={`flex shrink-0 items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold transition-all ${activeTab === 'penerima' ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20' : 'text-emerald-100 hover:text-white hover:bg-white/10'}`}>
-                 <PiHeartbeat size={18} /> Mitra &amp; Penerima
+                 <PiHeartbeat size={18} /> Penerima Manfaat
               </button>
               <button onClick={() => setActiveTab('relawan')} className={`flex shrink-0 items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold transition-all ${activeTab === 'relawan' ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20' : 'text-emerald-100 hover:text-white hover:bg-white/10'}`}>
                  <PiHandshake size={18} /> Pendaftar Relawan
@@ -66,7 +66,7 @@ const DatabaseStakeholder = () => {
         <div className="bg-white rounded-3xl shadow-xl shadow-slate-200/40 border border-slate-100 overflow-hidden min-h-[500px] flex flex-col">
            <div className="p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <h2 className="text-lg font-semibold text-slate-800 flex items-center gap-2">
-                 {activeTab === 'donatur' ? 'Direktori Donatur' : activeTab === 'penerima' ? 'Mitra & Penerima Bantuan' : 'Pendaftar Relawan'}
+                 {activeTab === 'donatur' ? 'Direktori Donatur' : activeTab === 'penerima' ? 'Penerima Bantuan' : 'Pendaftar Relawan'}
                  <span className="bg-slate-100 text-slate-500 text-xs px-2 py-0.5 rounded-full font-medium">{activeTab === 'donatur' ? MOCK_DONATUR.length : activeTab === 'penerima' ? MOCK_PENERIMA.length : MOCK_RELAWAN.length} Data</span>
               </h2>
               <div className="flex items-center gap-3">
@@ -178,9 +178,9 @@ const DatabaseStakeholder = () => {
       {isModalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-fade-in">
           <div className="bg-white rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden animate-slide-up">
-            <div className="flex items-center justify-between p-6 border-b border-slate-100">
+             <div className="flex items-center justify-between p-6 border-b border-slate-100">
               <h3 className="text-lg font-bold text-slate-800">
-                Tambah {activeTab === 'donatur' ? 'Donatur' : activeTab === 'penerima' ? 'Mitra/Penerima' : 'Pendaftar Relawan'}
+                Tambah {activeTab === 'donatur' ? 'Donatur' : activeTab === 'penerima' ? 'Penerima Bantuan' : 'Pendaftar Relawan'}
               </h3>
               <button onClick={() => setIsModalOpen(false)} className="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-100 text-slate-500 hover:bg-rose-100 hover:text-rose-600 transition-colors">
                 <PiX size={16} />
@@ -205,8 +205,8 @@ const DatabaseStakeholder = () => {
               ) : activeTab === 'penerima' ? (
                 <>
                   <div>
-                    <label className="block text-xs font-bold text-slate-500 mb-1.5">Nama Penerima / Organisasi</label>
-                    <input type="text" className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm bg-slate-50 focus:bg-white outline-none focus:border-emerald-500 transition-colors" placeholder="Cth: SDN 01 Kupang" />
+                    <label className="block text-xs font-bold text-slate-500 mb-1.5">Nama Penerima / Individu / Kelompok</label>
+                    <input type="text" className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm bg-slate-50 focus:bg-white outline-none focus:border-emerald-500 transition-colors" placeholder="Cth: SDN 01 Kupang atau Ibu Siti" />
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-slate-500 mb-1.5">Program Penyaluran Terkait</label>
@@ -218,7 +218,7 @@ const DatabaseStakeholder = () => {
                       <input type="text" className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm bg-slate-50 focus:bg-white outline-none focus:border-emerald-500 transition-colors" placeholder="Kab/Kota" />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold text-slate-500 mb-1.5">Nilai Bantuan (Rp)</label>
+                      <label className="block text-xs font-bold text-slate-500 mb-1.5">Estimasi Nilai Bantuan (Rp)</label>
                       <input type="number" className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm bg-slate-50 focus:bg-white outline-none focus:border-emerald-500 transition-colors" placeholder="0" />
                     </div>
                   </div>

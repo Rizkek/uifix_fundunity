@@ -8,22 +8,22 @@ const navMenus = [
     title: 'Siapa Kami',
     links: [
       { name: 'Tentang Kami', path: '/landing/about' },
-      { name: 'Mitra & Kolaborator', path: '/landing#mitra' }
+      { name: 'Mitra & Donatur', path: '/landing#mitra' }
     ]
   },
   {
     title: 'Apa Yang Kami Lakukan',
     links: [
-      { name: 'Pilar Program', path: '/landing#pilar' },
+      { name: 'Pilar Fokus Program', path: '/landing#pilar' },
       { name: 'Program Galang Dana', path: '/landing/allprograms' },
-      { name: 'Laporan Transparansi', path: '/landing#transparansi' }
+      { name: 'Galeri Dokumentasi', path: '/landing/gallery' }
     ]
   },
   {
     title: 'Bergerak Bersama',
     links: [
       { name: 'FAQ (Tanya Jawab)', path: '/landing/faqs' },
-      { name: 'Cara Terlibat', path: '/landing/getinvolved' }
+      { name: 'Pendaftaran Relawan', path: '/landing/getinvolved' }
     ]
   }
 ];

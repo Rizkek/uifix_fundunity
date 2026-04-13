@@ -7,39 +7,17 @@ import img2 from "../../assets/LandingAssets/images/image2.jpg";
 import img3 from "../../assets/LandingAssets/images/image3.jpg";
 
 const Gallery = () => {
-  const [images, setImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetch("https://backendd-fundunity.onrender.com/v1/content/imageslider")
-      .then((res) => {
-        if (!res.ok) throw new Error("Gagal mengambil gambar");
-        return res.json();
-      })
-      .then((data) => {
-        const fetched = data.slice(0, 3);
-        // Gunakan dummy jika tidak ada imageUrl
-        const fallbacks = [
-          { id: "f1", imageUrl: img1, title: "Momen Kebersamaan" },
-          { id: "f2", imageUrl: img2, title: "Aksi Sosial" },
-          { id: "f3", imageUrl: img3, title: "Program Komunitas" },
-        ];
-        setImages(fetched.length > 0 ? fetched : fallbacks);
-        setLoading(false);
-      })
-      .catch(() => {
-        setImages([
-          { id: "f1", imageUrl: img1, title: "Momen Kebersamaan" },
-          { id: "f2", imageUrl: img2, title: "Aksi Sosial" },
-          { id: "f3", imageUrl: img3, title: "Program Komunitas" },
-        ]);
-        setLoading(false);
-      });
-  }, []);
+  const images = [
+    { id: "f1", imageUrl: img1, title: "Momen Kebersamaan" },
+    { id: "f2", imageUrl: img2, title: "Aksi Sosial" },
+    { id: "f3", imageUrl: img3, title: "Program Komunitas" },
+  ];
 
   return (
     <section className="py-20 px-6 md:px-12 bg-white">
+
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-14">
@@ -93,7 +71,7 @@ const Gallery = () => {
               </p>
             </div>
             <NavLink
-              to="/moregallery"
+              to="/landing/gallery"
               className="mt-8 inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-blue-700 font-bold rounded-xl hover:bg-blue-50 transition"
             >
               Lihat Galeri Lengkap
@@ -105,24 +83,20 @@ const Gallery = () => {
 
           {/* Photo Grid Block */}
           <div className="grid grid-cols-2 gap-3 content-start">
-            {loading
-              ? [1, 2, 3, 4].map((i) => (
-                  <div key={i} className="rounded-xl bg-gray-200 animate-pulse h-32" />
-                ))
-              : images.slice(0, 4).map((img, i) => (
-                  <div
-                    key={img.id || i}
-                    className="rounded-xl overflow-hidden shadow-sm hover:shadow-lg cursor-pointer transition-all duration-300 h-32"
-                    onClick={() => setSelectedImage(img)}
-                  >
-                    <img
-                      src={img.imageUrl}
-                      alt={img.title || `Galeri ${i + 1}`}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
-                    />
-                  </div>
-                ))}
+            {images.slice(0, 4).map((img, i) => (
+              <div
+                key={img.id || i}
+                className="rounded-xl overflow-hidden shadow-sm hover:shadow-lg cursor-pointer transition-all duration-300 h-32"
+                onClick={() => setSelectedImage(img)}
+              >
+                <img
+                  src={img.imageUrl}
+                  alt={img.title || `Galeri ${i + 1}`}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+              </div>
+            ))}
           </div>
         </div>
       </div>

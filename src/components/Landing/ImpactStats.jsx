@@ -52,39 +52,12 @@ function formatAmount(num) {
 }
 
 export default function ImpactStats() {
-  const [data, setData] = useState({ donors: 0, amount: 0, programs: 0, partners: 0 });
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchAll = async () => {
-      try {
-        const [txRes, progRes, partRes] = await Promise.all([
-          fetch("https://backendd-fundunity.onrender.com/v1/content/transaction"),
-          fetch("https://backendd-fundunity.onrender.com/v1/content/program"),
-          fetch("https://backendd-fundunity.onrender.com/v1/content/ourpartner"),
-        ]);
-        const transactions = await txRes.json();
-        const programs = await progRes.json();
-        const partners = await partRes.json();
-
-        const successful = Array.isArray(transactions)
-          ? transactions.filter((t) => t.status === "berhasil")
-          : [];
-
-        setData({
-          donors: successful.length,
-          amount: successful.reduce((sum, t) => sum + (t.amount || 0), 0),
-          programs: Array.isArray(programs) ? programs.length : 0,
-          partners: Array.isArray(partners) ? partners.length : 0,
-        });
-      } catch (err) {
-        console.error("Gagal memuat statistik:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchAll();
-  }, []);
+  const data = {
+    donors: 1240,
+    amount: 1450000000,
+    programs: 48,
+    partners: 12
+  };
 
   return (
     <section className="py-16 px-6 bg-blue-700">
@@ -93,7 +66,7 @@ export default function ImpactStats() {
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
             Dampak Nyata Bersama Kita
           </h2>
-          <p className="text-blue-200 mt-2 text-sm">Data diperbarui secara otomatis dari sistem kami.</p>
+          <p className="text-blue-200 mt-2 text-sm">Data akumulasi dampak perubahan sosial di seluruh Nusantara.</p>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {stats.map(({ label, icon, suffix, prefix, key, isAmount }) => (
@@ -102,15 +75,11 @@ export default function ImpactStats() {
               className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 text-center text-white"
             >
               <div className="flex justify-center mb-3 opacity-80">{icon}</div>
-              {loading ? (
-                <div className="h-8 bg-white/20 rounded animate-pulse mx-auto w-16 mb-2" />
-              ) : (
-                <div className="text-3xl font-extrabold mb-1">
-                  {prefix && <span className="text-lg font-semibold mr-1 opacity-80">{prefix}</span>}
-                  {isAmount ? formatAmount(data[key]) : data[key]}
-                  {suffix && <span className="text-lg font-semibold opacity-80">{suffix}</span>}
-                </div>
-              )}
+              <div className="text-3xl font-extrabold mb-1">
+                {prefix && <span className="text-lg font-semibold mr-1 opacity-80">{prefix}</span>}
+                {isAmount ? formatAmount(data[key]) : data[key]}
+                {suffix && <span className="text-lg font-semibold opacity-80">{suffix}</span>}
+              </div>
               <p className="text-blue-100 text-sm">{label}</p>
             </div>
           ))}

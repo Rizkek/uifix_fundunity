@@ -46,12 +46,7 @@ export default function VolunteerRegistration() {
          <p className="text-sm text-emerald-100 italic mb-6">
            "Kami tidak bisa jalan sendirian."
          </p>
-         <div className="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20">
-            <p className="text-xs font-bold text-white mb-2 uppercase tracking-widest">Informasi Sistem:</p>
-            <p className="text-sm text-white leading-relaxed">
-              Pendaftaran yang Anda lengkapi di sini akan masuk langsung ke antrean <b>Database Relawan</b> kami di Dashboard Admin.
-            </p>
-         </div>
+         
       </div>
 
       <form onSubmit={handleSubmit} className="md:w-7/12 p-10 flex flex-col gap-5">

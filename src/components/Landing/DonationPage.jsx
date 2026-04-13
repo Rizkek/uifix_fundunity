@@ -233,60 +233,42 @@ const DonationPage = () => {
     </div>
   );
 
-  // Step 2: Payment Method
+  // Step 2: Confirmation
   const renderStep2 = () => (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in text-center">
       <button onClick={handlePrev} className="flex items-center gap-2 text-slate-500 hover:text-slate-900 font-bold mb-6 transition-colors">
         <PiArrowLeft /> Kembali
       </button>
       
-      <h2 className="text-2xl font-extrabold text-slate-900 mb-2">Metode Pembayaran</h2>
-      <p className="text-slate-500 mb-6">Pilih metode pembayaran yang tersedia</p>
-
-      <div className="space-y-4 mb-8">
-        <button
-          onClick={() => setPaymentMethod('qris')}
-          className={`w-full p-4 flex items-center gap-4 rounded-xl border-2 transition-all text-left ${
-            paymentMethod === 'qris' ? 'border-emerald-500 bg-emerald-50 shadow-sm' : 'border-slate-100 bg-white hover:border-emerald-200'
-          }`}
-        >
-          <div className="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center text-slate-500 shrink-0">
-            <PiMoney size={24} />
-          </div>
-          <div>
-            <h4 className="font-bold text-slate-900">QRIS (Otomatis)</h4>
-            <p className="text-xs text-slate-500 font-medium">Gopay, OVO, Dana, ShopeePay, m-Banking</p>
-          </div>
-        </button>
-
-        <button
-          onClick={() => setPaymentMethod('bank_transfer')}
-          className={`w-full p-4 flex items-center gap-4 rounded-xl border-2 transition-all text-left ${
-            paymentMethod === 'bank_transfer' ? 'border-emerald-500 bg-emerald-50 shadow-sm' : 'border-slate-100 bg-white hover:border-emerald-200'
-          }`}
-        >
-          <div className="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center text-slate-500 shrink-0">
-            <PiBank size={24} />
-          </div>
-          <div>
-            <h4 className="font-bold text-slate-900">Virtual Account / Transfer Bank</h4>
-            <p className="text-xs text-slate-500 font-medium">BCA, Mandiri, BNI, BRI (Cek Otomatis)</p>
-          </div>
-        </button>
+      <div className="w-20 h-20 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
+        <PiMoney size={40} />
       </div>
 
-      <div className="bg-slate-50 p-4 rounded-xl mb-8 flex justify-between items-center border border-slate-100">
-        <span className="text-slate-500 font-bold text-sm">Total Donasi</span>
-        <span className="text-xl font-extrabold text-emerald-600">{rp(selectedAmount)}</span>
+      <h2 className="text-2xl font-extrabold text-slate-900 mb-2">Konfirmasi Donasi</h2>
+      <p className="text-slate-500 mb-8">Pembayaran akan menggunakan metode <b>QRIS Otomatis</b>.</p>
+
+      <div className="bg-slate-50 p-6 rounded-2xl mb-8 space-y-3 border border-slate-100 text-left">
+        <div className="flex justify-between items-center">
+          <span className="text-slate-400 font-bold text-xs uppercase">Nama Donatur</span>
+          <span className="font-bold text-slate-800">{name}</span>
+        </div>
+        <div className="flex justify-between items-center pt-3 border-t border-slate-200/50">
+          <span className="text-slate-400 font-bold text-xs uppercase">Total Donasi</span>
+          <span className="text-xl font-extrabold text-emerald-600">{rp(selectedAmount)}</span>
+        </div>
       </div>
 
       <button
-        disabled={!paymentMethod}
-        onClick={handleNext}
-        className="w-full py-4 bg-emerald-500 hover:bg-emerald-600 disabled:bg-slate-200 disabled:text-slate-400 text-white font-bold rounded-xl transition-all shadow-lg shadow-emerald-500/30 flex items-center justify-center gap-2"
+        onClick={() => {
+          setPaymentMethod('qris');
+          handleNext();
+        }}
+        className="w-full py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl transition-all shadow-lg shadow-emerald-500/30 flex items-center justify-center gap-2"
       >
-        Bayar Sekarang <PiArrowRight />
+        Lanjutkan ke QRIS <PiArrowRight />
       </button>
+
+      <p className="mt-4 text-[10px] text-slate-400 font-medium">Dengan menekan tombol di atas, Anda menyetujui syarat dan ketentuan donasi FundUnity.</p>
     </div>
   );
 
@@ -304,30 +286,23 @@ const DonationPage = () => {
         </div>
       </div>
 
-      <h2 className="text-2xl font-extrabold text-slate-900 mb-2">Selesaikan Pembayaran</h2>
-      <p className="text-slate-500 mb-8 max-w-sm mx-auto">Silakan selesaikan pembayaran sebelum waktu habis. Donasi akan diverifikasi otomatis.</p>
+      <h2 className="text-2xl font-extrabold text-slate-900 mb-2">Pindai QRIS</h2>
+      <p className="text-slate-500 mb-8 max-w-sm mx-auto">Silakan scan kode QR di bawah menggunakan aplikasi pembayaran Anda.</p>
 
-      {paymentMethod === 'qris' ? (
-        <div className="bg-white border-2 border-slate-100 rounded-2xl p-8 mb-8 inline-block shadow-xl shadow-slate-200/50">
-          <div className="w-48 h-48 bg-slate-100 mx-auto flex items-center justify-center rounded-xl border border-slate-200 mb-4 overflow-hidden relative group">
-            <span className="text-slate-400 font-bold">QRIS Code <br/>(Simulasi)</span>
-            {/* Dekorasi dummy QR */}
-            <div className="absolute inset-4 border-4 border-slate-200 border-dashed opacity-50"></div>
+      <div className="bg-white border-2 border-slate-100 rounded-3xl p-8 mb-8 inline-block shadow-2xl shadow-slate-200/50 relative">
+        <div className="w-56 h-56 bg-white mx-auto flex items-center justify-center rounded-2xl border-4 border-slate-50 mb-3 overflow-hidden relative">
+          {/* Simulasi Logo QRIS di Tengah atau Dekorasi */}
+          <div className="absolute inset-0 bg-slate-50 flex items-center justify-center">
+             <div className="grid grid-cols-4 gap-1 opacity-20 group-hover:opacity-40 transition-opacity">
+               {[...Array(16)].map((_, i) => <div key={i} className="w-8 h-8 bg-slate-900 rounded-sm"></div>)}
+             </div>
           </div>
-          <p className="text-sm font-bold text-slate-500">Scan bayar dari e-wallet / m-banking.</p>
-        </div>
-      ) : (
-        <div className="bg-white border-2 border-slate-100 rounded-2xl p-6 mb-8 text-left shadow-xl shadow-slate-200/50">
-          <p className="text-sm font-bold text-slate-500 mb-2">Nomor Virtual Account</p>
-          <div className="flex justify-between items-center bg-slate-50 p-4 rounded-xl mb-4 border border-slate-100">
-            <span className="text-xl sm:text-2xl font-extrabold tracking-wider text-slate-900">8984 1234 5678</span>
-            <button className="text-emerald-500 font-bold flex items-center gap-1 hover:text-emerald-600 transition-colors bg-emerald-50 px-3 py-1.5 rounded-lg">
-              <PiCopy /> Salin
-            </button>
+          <div className="z-10 bg-white p-3 rounded-xl shadow-lg border border-slate-100">
+             <p className="text-[10px] font-black text-slate-900">QRIS CODE</p>
           </div>
-          <p className="text-sm text-slate-500">a.n <b>Himpunan Mahasiswa Teknik (HMT)</b> (Bank BCA)</p>
         </div>
-      )}
+        <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Berlaku untuk semua e-wallet & bank</p>
+      </div>
 
       <div className="flex justify-between items-center border-t border-slate-100 pt-6 mb-8">
         <span className="text-slate-500 font-bold">Total Pembayaran</span>
@@ -353,7 +328,7 @@ const DonationPage = () => {
               Memverifikasi Pembayaran...
             </>
           ) : (
-            "Cek Status Pembayaran"
+            "Selesaikan Donasi"
           )}
         </button>
       )}
@@ -380,7 +355,7 @@ const DonationPage = () => {
           </div>
           <div className="flex justify-between">
             <span className="text-slate-500">Metode</span>
-            <span className="font-bold text-slate-700">{paymentMethod === 'qris' ? 'QRIS' : 'Virtual Account'}</span>
+            <span className="font-bold text-slate-700">QRIS (Otomatis)</span>
           </div>
           <div className="flex justify-between">
             <span className="text-slate-500">Waktu</span>
@@ -388,7 +363,7 @@ const DonationPage = () => {
           </div>
         </div>
         <div className="mt-4 pt-4 border-t border-slate-200 text-xs text-slate-500">
-          Tanda terima dan link live tracking program telah dikirim ke <b>{email}</b>. Anda dapat melacak perkembangan program tanpa harus login.
+          Tanda terima dan link live tracking program telah dikirim ke <b>{email}</b>. Terima kasih atas kepedulian Anda.
         </div>
       </div>
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { PiHouse, PiUsersFour, PiHandshake, PiCaretLeft, PiCaretRight, PiTarget, PiDoorOpen, PiWallet, PiSlideshow, PiGear, PiCrosshair, PiChatsCircle, PiEnvelopeOpen, PiUsersThree, PiMegaphone, PiCalendarBlank, PiHeartbeat, PiUsers, PiChartLine, PiNotebook, PiBell } from "react-icons/pi";
+import { PiHouse, PiUsersFour, PiHandshake, PiCaretLeft, PiCaretRight, PiTarget, PiDoorOpen, PiWallet, PiSlideshow, PiGear, PiCrosshair, PiChatsCircle, PiEnvelopeOpen, PiUsersThree, PiMegaphone, PiCalendarBlank, PiHeartbeat, PiUsers, PiChartLine, PiNotebook, PiBell, PiImagesSquare } from "react-icons/pi";
 import { useAuth } from "../contexts/AuthContext";
 import logoImg from "../assets/images/Logo.png";
 import { TbSettings, TbWallet, TbSlideshow } from "react-icons/tb";
@@ -15,8 +15,9 @@ const menuItems = [
   { id: "home",        icon: PiHouse,       label: "Dashboard",       path: "/home" },
   { id: "campaign",    icon: PiMegaphone,    label: "Campaign",       path: "/campaign" },
   { id: "keuangantransparansi",    icon: PiChartLine,    label: "Keuangan",       path: "/keuangantransparansi" },
-  { id: "databasestakeholder", icon: PiUsers,        label: "Relasi",         path: "/databasestakeholder" },
+  { id: "databasestakeholder", icon: PiUsers,        label: "Relasi & Bantuan",  path: "/databasestakeholder" },
   { id: "messages",    icon: PiEnvelopeOpen,label: "Kotak Masuk",     path: "/messages" },
+  { id: "gallery",     icon: PiImagesSquare,       label: "Galeri Aktivitas", path: "/gallery" },
   // Split Landing Management back as requested
   { id: "aboutus",     icon: PiUsersFour,   label: "Profil Lembaga",      path: "/aboutus" },
   { id: "focusareas",  icon: PiCrosshair,    label: "Fokus Area",     path: "/focusareas" },
@@ -67,7 +68,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen, onToggleSidebar, isLog
         </div>
 
         {/* Nav Items */}
-        <nav className="flex-1 space-y-1 px-3 overflow-y-auto overflow-x-hidden">
+        <nav className="flex-1 space-y-1 px-3 mt-2 overflow-y-auto overflow-x-hidden relative hide-scrollbar">
           {menuItems.map(({ id, icon: Icon, label, path }) => (
             <NavLink
               key={id}
@@ -149,6 +150,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen, onToggleSidebar, isLog
           {isSidebarOpen ? <PiCaretLeft size={13} /> : <PiCaretRight size={13} />}
         </button>
       </div>
+
+      <style>{`
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      `}</style>
 
       {/* Logout Confirmation Modal */}
       {showLogoutModal && (

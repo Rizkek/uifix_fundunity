@@ -18,29 +18,6 @@ const DUMMY_PARTNERS = [
 const API_BASE_URL = "https://backendd-fundunity.onrender.com/v1/content/ourpartner";
 
 const Partners = () => {
-  const [partners, setPartners] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchPartners = async () => {
-      try {
-        const res = await fetch(API_BASE_URL);
-        if (!res.ok) throw new Error("Failed");
-        const data = await res.json();
-        const formatted = data.map((item) => ({
-          name: item.name,
-          logo: item.imageUrl || null,
-        }));
-        setPartners(formatted.length > 0 ? formatted : DUMMY_PARTNERS);
-      } catch {
-        setPartners(DUMMY_PARTNERS);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchPartners();
-  }, []);
-
   return (
     <section className="py-20 bg-white border-t border-slate-100 overflow-hidden" id="mitra">
       <div className="max-w-7xl mx-auto px-6">
@@ -49,31 +26,17 @@ const Partners = () => {
           <h2 className="text-3xl font-extrabold text-slate-900">Kolaborator Kebaikan</h2>
         </div>
 
-        {loading ? (
-          <div className="flex flex-wrap justify-center gap-8 md:gap-16 opacity-50">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="h-12 w-32 bg-slate-200 animate-pulse rounded-lg" />
-            ))}
-          </div>
-        ) : (
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60 hover:opacity-100 transition-opacity duration-500">
-            {partners.map((partner, i) => (
-              <div key={i} className="group relative flex flex-col items-center justify-center grayscale hover:grayscale-0 transition-all duration-300">
-                {partner.logo ? (
-                  <img
-                    src={partner.logo}
-                    alt={partner.name}
-                    className="h-10 md:h-12 object-contain transition-transform duration-300 group-hover:scale-110"
-                  />
-                ) : (
-                  <div className="h-10 md:h-12 flex items-center justify-center font-bold text-slate-400 text-xl tracking-tighter">
-                    {partner.name}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
+        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60 hover:opacity-100 transition-opacity duration-500">
+          {DUMMY_PARTNERS.map((partner, i) => (
+            <div key={i} className="group relative flex flex-col items-center justify-center grayscale hover:grayscale-0 transition-all duration-300">
+              <img
+                src={partner.logo}
+                alt={partner.name}
+                className="h-10 md:h-12 object-contain transition-transform duration-300 group-hover:scale-110"
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

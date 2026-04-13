@@ -12,10 +12,10 @@ export default function VolunteerCTA() {
 
          <div className="relative space-y-4 max-w-xl mx-auto flex flex-col items-center">
             <div className="p-3 bg-white/10 rounded-2xl backdrop-blur-sm text-white mb-2"><PiHandshake size={28}/></div>
-            <h2 className="text-2xl md:text-3xl font-black leading-snug">Mari Menjadi Bagian Dari Gerakan Kami!</h2>
-            <p className="text-white/80 text-sm leading-relaxed">
-               Dukungan Anda dalam bentuk apapun (Tenaga, Ide, maupun Dana) sangat berarti untuk menciptakan senyum baru bagi mereka yang membutuhkan.
-            </p>
+             <h2 className="text-2xl md:text-3xl font-black leading-snug">Menyalurkan Kebaikan Secara Langsung</h2>
+             <p className="text-white/80 text-sm leading-relaxed">
+                Kami membutuhkan tenaga Anda untuk membantu operasional lapangan, mulai dari pengepakan logistik hingga penyaluran bantuan langsung ke tangan penerima manfaat. 
+             </p>
              <div className="flex flex-col sm:flex-row gap-4 pt-4 w-full justify-center">
                <Link to="/landing/getinvolved" className="px-6 py-3 bg-white text-emerald-800 font-bold rounded-xl shadow-md hover:bg-slate-50 transition text-sm text-center">Gabung Jadi Relawan</Link>
                <Link to="/landing/faqs" className="px-6 py-3 border border-white/40 hover:bg-white/10 text-white font-bold rounded-xl transition text-sm text-center">Tanya Jawab (FAQ)</Link>

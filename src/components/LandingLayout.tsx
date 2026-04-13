@@ -16,6 +16,7 @@ import DonationPage from './Landing/DonationPage';
 import VolunteerRegistration from './Landing/VolunteerRegistration';
 import ContactSection from './Landing/ContactSection';
 import VolunteerCTA from './Landing/VolunteerCTA';
+import MoreGallery from './Landing/MoreGallery';
 
 // Anchor Scroll Handler - navigates to #hash on landing page
 const AnchorScrollHandler = () => {
@@ -88,6 +89,7 @@ const LandingLayout = () => {
             {/* Bergerak Bersama */}
             <Route path="faqs" element={<PageFaqs />} />
             <Route path="getinvolved" element={<PageGetInvolved />} />
+            <Route path="gallery" element={<PageWrapper><MoreGallery /></PageWrapper>} />
           </Routes>
         </main>
 

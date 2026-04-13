@@ -53,14 +53,11 @@ const LandingFocusAreas = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {pillars.map(p => (
-            <Link key={p.id} to={p.path} className={`rounded-[2rem] p-8 border ${p.color} transition-all duration-300 hover:-translate-y-2 hover:shadow-xl group`}>
+            <div key={p.id} className={`rounded-[2rem] p-8 border ${p.color} transition-all duration-300 hover:-translate-y-2 hover:shadow-xl group`}>
               <div className="mb-6">{p.icon}</div>
-              <h3 className="font-bold text-slate-900 text-lg mb-2 group-hover:text-emerald-500 transition-colors">{p.name}</h3>
-              <p className="text-slate-500 text-sm leading-relaxed mb-4">{p.desc}</p>
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest pt-2 border-t border-black/5 opacity-60 group-hover:opacity-100 transition-opacity">
-                Lihat Program <PiArrowRight />
-              </div>
-            </Link>
+              <h3 className="font-bold text-slate-900 text-lg mb-2">{p.name}</h3>
+              <p className="text-slate-500 text-sm leading-relaxed">{p.desc}</p>
+            </div>
           ))}
         </div>
       </div>
