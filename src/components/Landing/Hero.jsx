@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (
-    <div className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-slate-900">
+    <div className="relative min-h-screen flex items-center pt-24 pb-20 md:pb-32 overflow-hidden bg-slate-900">
       {/* Background Image & Overlay */}
       <div className="absolute inset-0">
         <img 

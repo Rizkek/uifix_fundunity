@@ -9,7 +9,6 @@ import Hero from './Landing/Hero';
 import LandingAboutUs from './Landing/LandingAboutUs';
 import LandingFocusAreas from './Landing/LandingFocusAreas';
 import HotCampaigns from './Landing/HotCampaigns';
-import TransparansiLanding from './Landing/TransparansiLanding';
 import Partners from './Landing/Partners';
 import LandingFaqs from './Landing/LandingFaqs';
 import DonationPage from './Landing/DonationPage';
@@ -17,6 +16,7 @@ import VolunteerRegistration from './Landing/VolunteerRegistration';
 import ContactSection from './Landing/ContactSection';
 import VolunteerCTA from './Landing/VolunteerCTA';
 import MoreGallery from './Landing/MoreGallery';
+import AllPrograms from './Landing/AllPrograms';
 
 // Anchor Scroll Handler - navigates to #hash on landing page
 const AnchorScrollHandler = () => {
@@ -39,7 +39,6 @@ const LandingHome = () => (
     <Hero />
     <LandingFocusAreas />
     <HotCampaigns />
-    <TransparansiLanding />
     <Partners />
     <VolunteerCTA />
     <ContactSection />
@@ -56,7 +55,7 @@ const PageWrapper = ({ children }: { children: React.ReactNode }) => (
 
 // ✅ Dedicated pages (add value beyond homepage)
 const PageAbout       = () => <PageWrapper><LandingAboutUs /></PageWrapper>;
-const PageAllPrograms = () => <PageWrapper><HotCampaigns /></PageWrapper>;
+const PageAllPrograms = () => <AllPrograms />;
 const PageFaqs        = () => <PageWrapper><LandingFaqs /></PageWrapper>;
 const PageGetInvolved = () => (
   <PageWrapper>

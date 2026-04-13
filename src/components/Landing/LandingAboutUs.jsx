@@ -94,9 +94,6 @@ const LandingAboutUs = () => {
               )}
             </div>
 
-            <Link to="/landing/transparansi" className="mt-8 flex items-center gap-2 text-emerald-600 font-bold w-max hover:text-emerald-700 transition-colors border-b-2 border-emerald-600/30 hover:border-emerald-600 pb-0.5">
-              Lihat Laporan Tahunan Kami <PiArrowRight size={18} />
-            </Link>
           </div>
         </div>
       </div>
